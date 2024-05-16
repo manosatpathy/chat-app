@@ -1,6 +1,5 @@
 import express from "express";
 import http from "http";
-import cors from "cors";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
 
@@ -8,10 +7,25 @@ const app = express();
 dotenv.config();
 const port = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-  res.send("yaahh all is working.");
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    allowedHeaders: ["*"],
+    origin: "*",
+  },
 });
 
-app.listen(port, () => {
+io.on("connection", (socket) => {
+  console.log("socket connected");
+  socket.on("chat msg", (msg) => {
+    console.log("message: " + msg);
+  });
+});
+
+app.get("/", (req, res) => {
+  res.send("yaahh all working.");
+});
+
+server.listen(port, () => {
   console.log("app is listening on port " + port);
 });

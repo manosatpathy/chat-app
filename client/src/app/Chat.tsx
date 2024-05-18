@@ -6,12 +6,12 @@ const Chat = () => {
 
     const [msg, setMsg] = useState<string>("")
     const [socket, setSocket] = useState<any>(null)
-    const [msgs, setMsgs] = useState<string[]>([])
+    const [msgs, setMsgs] = useState<string[]>([]) 
 
 
     const sendMsg = (e: React.FormEvent) => {
         e.preventDefault()
-        if (socket) {
+        if (socket && msg !== "") {
             socket.emit("chat msg", msg)
             setMsgs([...msgs, msg])
             setMsg("")

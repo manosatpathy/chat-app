@@ -19,6 +19,7 @@ io.on("connection", (socket) => {
   console.log("socket connected");
   socket.on("chat msg", (msg) => {
     console.log("message: " + msg);
+    socket.broadcast.emit("chat msg", msg);
   });
 });
 

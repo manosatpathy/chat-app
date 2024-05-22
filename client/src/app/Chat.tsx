@@ -47,7 +47,7 @@ const Chat = () => {
                 {/* </div> */}
                 <form action="" className='w-full h-16 px-3 mb-3 flex items-center gap-3' onSubmit={sendMsg}>
                     <input type="text" placeholder='type a message' className='h-10 w-full p-4 rounded-lg text-black' value={msg} onChange={(e) => setMsg(e.target.value)} />
-                    <button className="h-10 px-5 text-green-100 transition-colors duration-150 bg-purple-500 rounded-lg focus:shadow-outline hover:bg-green-800">Send</button>
+                    <button className="h-10 px-5 text-green-100 transition-colors duration-150 bg-indigo-600 rounded-lg focus:shadow-outline hover:bg-indigo-400">Send</button>
                 </form>
             </div>
         </div>

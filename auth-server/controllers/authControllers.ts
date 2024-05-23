@@ -24,3 +24,19 @@ export const userSignup = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Signup failed" });
   }
 };
+
+export const userSignin = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
+  if (!user) {
+    res.status(401).json({ message: "user not found" });
+  } else {
+    const passwordMatched = await bcrypt.compare(password, user.password);
+    if (passwordMatched) {
+      generateJwtAndSetCookie(user._id, res);
+      res.status(200).json({ message: "Logged in Sucessfully" });
+    } else {
+      res.status(401).json({ message: "Wrong Credential" });
+    }
+  }
+};

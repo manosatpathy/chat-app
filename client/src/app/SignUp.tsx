@@ -15,6 +15,8 @@ const SignUp = () => {
                 name: name,
                 username: userName,
                 password: password
+            }, {
+                withCredentials: true
             })
             alert(response.data.message)
         } catch (error: any) {

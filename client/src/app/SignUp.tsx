@@ -10,14 +10,22 @@ const SignUp = () => {
 
     const onSignup = async (e: React.FormEvent) => {
         e.preventDefault()
-        const response = await axios.post("http://localhost:8080/auth/signup", {
-            name: name,
-            username: userName,
-            password: password
-        })
-        console.log(response.data)
+        try {
+            const response = await axios.post("http://localhost:8080/auth/signup", {
+                name: name,
+                username: userName,
+                password: password
+            })
+            alert(response.data.message)
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.message) {
+                alert(error.response.data.message)
+            } else {
+                console.error("Error in signup: ", error)
+                alert("An error occurred during signup. Please try again.")
+            }
+        }
     }
-
     return (
         <div>
             <div className='h-[100vh] flex w-[100vw] flex-col gap-3 justify-center items-center'>
@@ -31,13 +39,13 @@ const SignUp = () => {
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium leading-6 text-indigo-600">Full Name</label>
                                     <div className="mt-2">
-                                        <input id="name" name="Name" type="e" autoComplete="name" required value={name} onChange={(e) => setName(e.target.value)} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        <input id="name" name="name" type="text" autoComplete="name" required value={name} onChange={(e) => setName(e.target.value)} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                     </div>
                                 </div>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-indigo-600">User Name</label>
                                     <div className="mt-2">
-                                        <input id="email" name="email" type="email" autoComplete="email" required value={userName} onChange={(e) => setUserName(e.target.value)} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        <input id="email" name="username" type="username" autoComplete="email" required value={userName} onChange={(e) => setUserName(e.target.value)} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                     </div>
                                 </div>
                                 <div>

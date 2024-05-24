@@ -1,13 +1,9 @@
-import Image from "next/image";
-import Chat from "./Chat";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import SignUp from "../app/signup/page";
 
 export default function Home() {
   return (
     <div>
-      <SignUp/>
-      <SignIn></SignIn>
+      <SignUp />
     </div>
   );
 }

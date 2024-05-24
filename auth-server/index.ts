@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-import authRouter from "./routes/authRoutes.js";
+import authRouter from "./routes/authRoute.js";
+import getUsers from "./routes/usersRoute.js";
 import connection from "./db/connection.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -20,6 +21,7 @@ app.use(
 const port = process.env.PORT;
 
 app.use("/auth", authRouter);
+app.use("/", getUsers);
 
 app.listen(port, () => {
   console.log("app listening on port " + port);

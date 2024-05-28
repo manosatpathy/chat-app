@@ -9,6 +9,9 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   }
   try {
     const decoded = jwt.verify(token, secret as Secret);
+    if (decoded) {
+      next();
+    }
   } catch (err) {
     return res.status(401).json({ message: "Unauthorized: invalid token" });
   }

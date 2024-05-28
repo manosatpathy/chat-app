@@ -16,8 +16,13 @@ const Chat = () => {
 
     const sendMsg = (e: React.FormEvent) => {
         e.preventDefault()
+        const msgTobeSent = {
+            txtMsg: msg,
+            sender: "munu",
+            receiver: "punu"
+        }
         if (socket && msg !== "") {
-            socket.emit("chat msg", msg)
+            socket.emit("chat msg", msgTobeSent)
             setMsgs((prevMsg) => [...prevMsg, { text: msg, sentByCurrUser: true }]);
             setMsg("")
             console.log(msgs)
@@ -25,7 +30,11 @@ const Chat = () => {
     }
 
     useEffect(() => {
-        const newSocket = io("http://localhost:8080")
+        const newSocket = io("http://localhost:8080", {
+            query: {
+                user: "manuaa"
+            }
+        })
         setSocket(newSocket);
         newSocket.on("chat msg", (receivedMsg) => {
             setMsgs((prvMsg) => [...prvMsg, { text: receivedMsg, sentByCurrUser: false }])

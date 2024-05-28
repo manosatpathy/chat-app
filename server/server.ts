@@ -17,9 +17,13 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("socket connected");
+  const user = socket.handshake.query.user;
+  console.log("username", user);
   socket.on("chat msg", (msg) => {
-    console.log("message: " + msg);
-    socket.broadcast.emit("chat msg", msg);
+    console.log("message: " + msg.txtMsg);
+    console.log("sender: " + msg.sender);
+    console.log("receiver: " + msg.receiver);
+    socket.broadcast.emit("chat msg", msg.txtMsg);
   });
 });
 

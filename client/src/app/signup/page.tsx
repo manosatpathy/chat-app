@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const SignUp = () => {
     const router = useRouter()
@@ -12,7 +13,7 @@ const SignUp = () => {
     const onSignup = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const response = await axios.post("http://localhost:8080/auth/signup", {
+            const response = await axios.post("http://localhost:8082/auth/signup", {
                 name: name,
                 username: userName,
                 password: password
@@ -68,7 +69,7 @@ const SignUp = () => {
                             </form>
                             <p className="mt-10 text-center text-sm text-gray-500">
                                 Already a User ?
-                                <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 pl-2">Sign in</a>
+                                <Link href="signin" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 pl-2">Sign in</Link>
                             </p>
                         </div>
                     </div>

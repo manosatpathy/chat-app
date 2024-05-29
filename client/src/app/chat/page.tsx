@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { io } from "socket.io-client"
+import { useAuthStore } from '../zustand/useAuthStore'
 
 const Chat = () => {
 
@@ -12,13 +13,14 @@ const Chat = () => {
     const [msg, setMsg] = useState<string>("")
     const [socket, setSocket] = useState<any>(null)
     const [msgs, setMsgs] = useState<Message[]>([])
+    const { authName } = useAuthStore()
 
 
     const sendMsg = (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault() 
         const msgTobeSent = {
             txtMsg: msg,
-            sender: "munu",
+            sender: authName,
             receiver: "punu"
         }
         if (socket && msg !== "") {
@@ -32,7 +34,7 @@ const Chat = () => {
     useEffect(() => {
         const newSocket = io("http://localhost:8080", {
             query: {
-                user: "manuaa"
+                user: authName
             }
         })
         setSocket(newSocket);

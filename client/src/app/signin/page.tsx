@@ -2,21 +2,27 @@
 import axios from "axios"
 import React, { useState, } from 'react'
 import { useRouter } from "next/navigation"
+import { useAuthStore } from "../zustand/useAuthStore"
+import Link from "next/link"
+
 const SignIn = () => {
     const router = useRouter()
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
+    const { updateAuthName } = useAuthStore()
+
 
     const onSignIn = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const response = await axios.post("http://localhost:8080/auth/signin", {
+            const response = await axios.post("http://localhost:8082/auth/signin", {
                 username: userName,
                 password: password
             }, {
                 withCredentials: true
             })
             router.push("/chat")
+            updateAuthName(response.data.username)
             alert(response.data.message)
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.message) {
@@ -61,7 +67,7 @@ const SignIn = () => {
                             </form>
                             <p className="mt-10 text-center text-sm text-gray-500">
                                 Not a User ?
-                                <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 pl-2">Sign up</a>
+                                <Link href="signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 pl-2">Sign up</Link>
                             </p>
                         </div>
                     </div>

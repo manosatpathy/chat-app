@@ -34,7 +34,9 @@ export const userSignin = async (req: Request, res: Response) => {
     const passwordMatched = await bcrypt.compare(password, user.password);
     if (passwordMatched) {
       generateJwtAndSetCookie(user._id, res);
-      res.status(200).json({ message: "Logged in Sucessfully" });
+      res
+        .status(200)
+        .json({ message: "Logged in Sucessfully", username: user.name });
     } else {
       res.status(401).json({ message: "Wrong Credential" });
     }

@@ -1,7 +1,12 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { io } from "socket.io-client"
+import Image from 'next/image'
 import { useAuthStore } from '../zustand/useAuthStore'
+import { useUserStore } from '../zustand/useUserStore'
+import axios from "axios"
+import UsersList from '../_components/UsersList'
+
 
 const Chat = () => {
 
@@ -14,14 +19,15 @@ const Chat = () => {
     const [socket, setSocket] = useState<any>(null)
     const [msgs, setMsgs] = useState<Message[]>([])
     const { authName } = useAuthStore()
+    const { updateUsersName } = useUserStore()
 
 
     const sendMsg = (e: React.FormEvent) => {
-        e.preventDefault() 
+        e.preventDefault()
         const msgTobeSent = {
             txtMsg: msg,
             sender: authName,
-            receiver: "punu"
+            receiver: "b"
         }
         if (socket && msg !== "") {
             socket.emit("chat msg", msgTobeSent)
@@ -29,6 +35,13 @@ const Chat = () => {
             setMsg("")
             console.log(msgs)
         }
+    }
+
+    const getUsers = async () => {
+        const res = await axios.get("http://localhost:8082/users", {
+            withCredentials: true
+        })
+        updateUsersName(res.data.users)
     }
 
     useEffect(() => {
@@ -41,24 +54,27 @@ const Chat = () => {
         newSocket.on("chat msg", (receivedMsg) => {
             setMsgs((prvMsg) => [...prvMsg, { text: receivedMsg, sentByCurrUser: false }])
         })
+        getUsers();
         return (): void => {
             newSocket.close()
         }
     }, [])
 
     return (
-        <div className='h-[100vh] flex w-[100vw] flex-col gap-3 justify-center items-center'>
-            <div className='h-2/3 w-1/3 border border-whtie-50 flex flex-col justify-end rounded-xl'>
-                {/* <div className='flex-grow overflow-y-auto flex flex-col'> */}
+        <div className='h-[100vh] flex w-[100vw] flex-row bg-[#131313]'>
+            <div className='h-full w-24'></div>
+            <div className='h-full w-4/12 bg-[#2e333d] rounded-l-3xl '>
+                <UsersList></UsersList>
+            </div>
+            <div className='h-full w-full bg-[#2e333d] flex flex-col justify-end rounded-r-3xl pr-7'>
                 {msgs.map((msg, index) => {
                     return <div className={`flex flex-col ${msg.sentByCurrUser ? 'items-end' : 'items-start'} overflow-hidden`} key={index}>
-                        <div className={`m-2 py-4 px-3 ${msg.sentByCurrUser ? 'bg-green-800' : 'bg-gray-700'} rounded-xl w-fit`} >{msg.text}</div>
+                        <div className={`m-2 py-4 px-3 ${msg.sentByCurrUser ? 'bg-[#6b8afd]' : 'bg-gray-700'} rounded-l-2xl rounded-t-2xl w-fit`} >{msg.text}</div>
                     </div>
                 })}
-                {/* </div> */}
                 <form action="" className='w-full h-16 px-3 mb-3 flex items-center gap-3' onSubmit={sendMsg}>
-                    <input type="text" placeholder='type a message' className='h-10 w-full p-4 rounded-lg text-black' value={msg} onChange={(e) => setMsg(e.target.value)} />
-                    <button className="h-10 px-5 text-green-100 transition-colors duration-150 bg-indigo-600 rounded-lg focus:shadow-outline hover:bg-indigo-400">Send</button>
+                    <input type="text" placeholder='Your message' className='h-10 w-full bg-transparent border border-white p-4 rounded-lg text-white' value={msg} onChange={(e) => setMsg(e.target.value)} />
+                    <button className="transition-colors duration-150 hover:bg-indigo-400"><Image src="/send-message.png" alt="Button logo" width={30} height={30} /></button>
                 </form>
             </div>
         </div>

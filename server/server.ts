@@ -35,7 +35,9 @@ io.on("connection", (socket) => {
     console.log("receiver: " + msg.receiver);
     const receiverSocket = userSocketMap[msg.receiver];
     if (receiverSocket) {
-      receiverSocket.emit("chat msg", msg);
+      receiverSocket.emit("chat msg", msg.txtMsg);
+    } else {
+      console.error("receiver not found or not connected");
     }
   });
 });

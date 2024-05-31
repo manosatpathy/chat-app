@@ -36,7 +36,7 @@ const SignIn = () => {
 
     return (
         <div>
-            <div className='h-[100vh] flex w-[100vw] flex-col gap-3 justify-center items-center'>
+            <div className='h-[100vh] flex w-[100vw] flex-col gap-3 justify-center items-center bg-[#F8FAFC]'>
                 <div className='h-2/3 w-1/3 flex flex-col justify-end rounded-xl'>
                     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                         <div className="sm:mx-auto sm:w-full sm:max-w-sm">

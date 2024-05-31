@@ -61,20 +61,20 @@ const Chat = () => {
     }, [])
 
     return (
-        <div className='h-[100vh] flex w-[100vw] flex-row bg-[#131313]'>
+        <div className='h-[100vh] flex w-[100vw] flex-row bg-white'>
             <div className='h-full w-24'></div>
-            <div className='h-full w-4/12 bg-[#2e333d] rounded-l-3xl '>
-                <UsersList></UsersList>
+            <div className='h-full w-4/12 bg-gray-200 rounded-l-3xl p-10'>  
+                    <UsersList></UsersList>
             </div>
-            <div className='h-full w-full bg-[#2e333d] flex flex-col justify-end rounded-r-3xl pr-7'>
+            <div className='h-full w-full bg-white flex flex-col justify-end rounded-r-3xl pr-7'>
                 {msgs.map((msg, index) => {
                     return <div className={`flex flex-col ${msg.sentByCurrUser ? 'items-end' : 'items-start'} overflow-hidden`} key={index}>
-                        <div className={`m-2 py-4 px-3 ${msg.sentByCurrUser ? 'bg-[#6b8afd]' : 'bg-gray-700'} rounded-l-2xl rounded-t-2xl w-fit`} >{msg.text}</div>
+                        <div className={`text-white m-2 py-4 px-3 ${msg.sentByCurrUser ? 'bg-[#A46FFF]' : 'bg-[#F3F4F6]'} rounded-l-2xl rounded-t-2xl w-fit`} >{msg.text}</div>
                     </div>
                 })}
-                <form action="" className='w-full h-16 px-3 mb-3 flex items-center gap-3' onSubmit={sendMsg}>
-                    <input type="text" placeholder='Your message' className='h-10 w-full bg-transparent border border-white p-4 rounded-lg text-white' value={msg} onChange={(e) => setMsg(e.target.value)} />
-                    <button className="transition-colors duration-150 hover:bg-indigo-400"><Image src="/send-message.png" alt="Button logo" width={30} height={30} /></button>
+                <form action="" className='w-full h-16 p-6 mt-3 flex items-center gap-3 border bg-white' onSubmit={sendMsg}>
+                    <input type="text" placeholder='Your message' className='outline-none bg-gray-50 h-10 w-full bg-transparent p-4 rounded-2xl text-gray-800' value={msg} onChange={(e) => setMsg(e.target.value)} />
+                    <button className="h-12 w-12 flex justify-center items-center rounded-full bg-white"><Image src="/icons8-send-button-50.png" alt="Button logo" width={30} height={30} /></button>
                 </form>
             </div>
         </div>

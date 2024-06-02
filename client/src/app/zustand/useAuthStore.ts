@@ -7,5 +7,5 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()((set) => ({
   authName: "",
-  updateAuthName: (name: string) => set({ authName: name }),
+  updateAuthName: (name) => set({ authName: name }),
 }));

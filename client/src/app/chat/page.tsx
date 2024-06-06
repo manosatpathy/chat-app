@@ -7,6 +7,7 @@ import { useUserStore } from '../zustand/useUserStore'
 import axios from "axios"
 import UsersList from '../_components/UsersList'
 import ChatHeader from '../_components/ChatHeader'
+import { useChatReceiverStore } from '../zustand/useChatReceiverStore'
 
 
 const Chat = () => {
@@ -21,6 +22,7 @@ const Chat = () => {
     const [msgs, setMsgs] = useState<Message[]>([])
     const { authName } = useAuthStore()
     const { updateUsersName } = useUserStore()
+    const { chatReceiver } = useChatReceiverStore()
 
 
     const sendMsg = (e: React.FormEvent) => {
@@ -28,7 +30,7 @@ const Chat = () => {
         const msgTobeSent = {
             txtMsg: msg,
             sender: authName,
-            receiver: "b"
+            receiver: chatReceiver.username
         }
         if (socket && msg !== "") {
             socket.emit("chat msg", msgTobeSent)
@@ -43,6 +45,7 @@ const Chat = () => {
             withCredentials: true
         })
         updateUsersName(res.data.users)
+        console.log(res.data.users)
     }
 
     useEffect(() => {
@@ -72,7 +75,7 @@ const Chat = () => {
                 <div className='h-full flex flex-col justify-end'>
                     {msgs.map((msg, index) => {
                         return <div className={`flex flex-col ${msg.sentByCurrUser ? 'items-end' : 'items-start'} overflow-hidden`} key={index}>
-                            <div className={`text-white m-2 py-4 px-3 ${msg.sentByCurrUser ? 'bg-[#A46FFF]' : 'bg-[#F3F4F6]'} rounded-l-2xl rounded-t-2xl w-fit`} >{msg.text}</div>
+                            <div className={` m-2 py-4 px-3 ${msg.sentByCurrUser ? 'bg-[#A46FFF] text-white' : 'bg-[#F3F4F6] text-black'} rounded-l-2xl rounded-t-2xl w-fit`} >{msg.text}</div>
                         </div>
                     })}
                 </div>

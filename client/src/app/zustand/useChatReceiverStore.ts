@@ -1,11 +1,24 @@
 import { create } from "zustand";
 
-interface chatReceiver {
-  chatReceiver: string;
-  updateChatReceiver: (by: string) => void;
+interface User {
+  _id: string;
+  name: string;
+  username: string;
 }
 
-const useChatReceiverStore = create<chatReceiver>()((set) => ({
-  chatReceiver: "",
-  updateChatReceiver: (chatReceiver) => set({ chatReceiver: chatReceiver }),
+interface chatReceiver {
+  chatReceiver: User;
+  updateChatReceiver: (by: User) => void;
+}
+
+const defaultUser: User = {
+  _id: "",
+  name: "",
+  username: "",
+};
+
+export const useChatReceiverStore = create<chatReceiver>()((set) => ({
+  chatReceiver: defaultUser,
+  updateChatReceiver: (chatReceiver: User) =>
+    set({ chatReceiver: chatReceiver }),
 }));

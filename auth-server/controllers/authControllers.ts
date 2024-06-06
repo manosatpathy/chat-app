@@ -36,7 +36,7 @@ export const userSignin = async (req: Request, res: Response) => {
       generateJwtAndSetCookie(user._id, res);
       res
         .status(200)
-        .json({ message: "Logged in Sucessfully", username: user.name });
+        .json({ message: "Logged in Sucessfully", username: user.username });
     } else {
       res.status(401).json({ message: "Wrong Credential" });
     }

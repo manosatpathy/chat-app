@@ -8,6 +8,7 @@ import axios from "axios"
 import UsersList from '../_components/UsersList'
 import ChatHeader from '../_components/ChatHeader'
 import { useChatReceiverStore } from '../zustand/useChatReceiverStore'
+import SearchBar from '../_components/SearchBar'
 
 
 const Chat = () => {
@@ -45,7 +46,6 @@ const Chat = () => {
             withCredentials: true
         })
         updateUsersName(res.data.users)
-        console.log(res.data.users)
     }
 
     useEffect(() => {
@@ -66,11 +66,11 @@ const Chat = () => {
 
     return (
         <div className='h-[100vh] flex w-[100vw] flex-row bg-white'>
-            <div className='h-full w-24'></div>
-            <div className='h-full w-4/12 bg-gray-200 rounded-l-3xl p-10'>
+            <div className='h-full w-4/12 bg-purple-50 rounded-l-3xl px-10 border-green-500 border overflow-y-auto'>
+                <SearchBar></SearchBar>
                 <UsersList></UsersList>
             </div>
-            <div className='border border-green-500 h-full w-full bg-white flex flex-col rounded-r-3xl pr-7'>
+            <div className=' h-full w-full bg-violet-50 flex flex-col rounded-r-3xl pr-7'>
                 <ChatHeader></ChatHeader>
                 <div className='h-full flex flex-col justify-end'>
                     {msgs.map((msg, index) => {
